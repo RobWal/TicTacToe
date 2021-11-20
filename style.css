@@ -21,11 +21,10 @@ main {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
-    /* align-content: space-around; */
 }
 main h1 {
+    min-height: 4vh;
     margin: 0 0 5vh 0;
 }
 .gameBox {
@@ -38,7 +37,6 @@ main h1 {
     gap: 10px;
 }
 .square {
-    /* border: solid black 2px; */
     background-color: lightblue;
 }
 .options {

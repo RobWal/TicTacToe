@@ -2,12 +2,12 @@
 let currentPlayer = 'playerOne';
 let totalClicks = 0;
 let totalSquares = 0;
+let wasGameWon = false;
 let playerOne = {
     id: 'One',
     color: 'red',
     score: 0,
 };
-
 let playerTwo = {
     id: 'Two',
     color: 'blue',
@@ -27,7 +27,7 @@ const square23 = document.getElementById('2,3');
 const square33 = document.getElementById('3,3');
 const restartButton = document.getElementById('restartGame');
 
-//ADDING EVENT LISTENERS
+//ADDING EVENT LISTENERS TO SQUARES/BUTTONS
 for (let value of square) {
     totalSquares++;
     value.addEventListener('click', myScript);
@@ -46,7 +46,7 @@ function myScript(event) {
             event.target.style.backgroundColor = `${playerTwo.color}`;
             event.target.classList.add(`${playerTwo.id}`);
         }
-        //GAME CANNOT BE WON BEFORE 5TH MOVE
+        //GAME CANNOT BE WON BEFORE 5TH MOVE - PREVENT POINTLESS CHECKS
         if (!(totalClicks < 4)) {
             checkRowsAndColumns(event);
             checkDiagonals(event);
@@ -57,7 +57,8 @@ function myScript(event) {
             currentPlayer = 'playerOne';
         }
         totalClicks++;
-        if (totalClicks === 9) {
+        //IF ALL BOXES CLICKED W/O WINNER
+        if (totalClicks === 9 && wasGameWon === false) {
             setTimeout(function () {
                 alert("It's a draw!");
             }, 30);
@@ -150,8 +151,10 @@ function stopClicking() {
             value.classList.add('clicked');
         }
     }
+    wasGameWon = true;
 }
 
+//RESTART THE GAME, RESET VARIABLES
 function restartGame() {
     for (let value of square) {
         value.style.backgroundColor = 'lightblue';
@@ -163,4 +166,5 @@ function restartGame() {
     }
     totalClicks = 0;
     currentPlayer = 'playerOne';
+    wasGameWon = false;
 }
