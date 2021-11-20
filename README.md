@@ -1,6 +1,6 @@
 # TicTacToe
 
-# WHAT WE'LL NEED
+# What we'll need
 
 -   ~~Render a game in the browser~~
 -   ~~Switch turns between more than one player~~
@@ -15,21 +15,19 @@
 
 ## Layout of the page
 
--   SOMEWHERE IDENTIFYING WHOSE TURN IT IS
--   BUTTON - LOG SECTION OF WHO WENT WHERE, WHEN
--   BUTTON - SETTINGS
--   BUTTON - MENU
--   ADJUSTAGLE GAME SIZE??
--   BUTTON - HOW TO PLAY SECTION
--   ADSPACE (DUH)
+-   ~~Somewhere identifying whose turn it is~~
+-   Button - log section of who went where, when
+-   Button - settings
+-   Button - menu
+-   Adjustable game size
+-   Button - how to play section
+-   Adspace
 
 ## Settings
 
--   ALLOWING FOR CHANGING RULES
--   GAME.TIMER
--   GAME.BESTOF
--   GAME.SIZE
--   NAMES/PROFILES
--   GAME.EFFECTS/SOUNDS
--   SAVE GAMES
--   SOUND EFFECTS
+-   Allow for changing of rules
+-   Game timer
+-   Allow for "best of X" competition, ie. best of 5
+-   Show player names/profiles
+-   Game sound effects
+-   Save games/profiles
