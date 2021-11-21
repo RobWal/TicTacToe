@@ -19,7 +19,7 @@
 -   Button - log section of who went where, when
 -   Button - settings
 -   Button - menu
--   Adjustable game size
+-   ~~Adjustable game size~~
 -   Button - how to play section
 -   Adspace
 
@@ -28,6 +28,6 @@
 -   Allow for changing of rules
 -   Game timer
 -   Allow for "best of X" competition, ie. best of 5
--   Show player names/profiles
+-   ~~Show player names~~/profiles
 -   Game sound effects
 -   Save games/profiles

@@ -5,12 +5,12 @@ let totalSquares = 0;
 let wasGameWon = false;
 let playerOne = {
     id: 'First-Player',
-    color: 'red',
+    color: 'rgb(179, 255, 153)',
     score: 0,
 };
 let playerTwo = {
     id: 'Second-Player',
-    color: 'blue',
+    color: 'rgb(255, 221, 153)',
     score: 0,
 };
 
@@ -33,6 +33,8 @@ const restartButton = document.getElementById('restartGame');
 restartButton.addEventListener('click', restartGame);
 const changeNameButton = document.getElementById('changeName');
 changeNameButton.addEventListener('click', changeName);
+const nameChangeGrey = document.getElementById('nameChangeGrey');
+nameChangeGrey.addEventListener('click', exitNameChange);
 
 playerOneTag.innerText =
     playerTwo.innerText = `${playerOne.id}:  ${playerOne.score}`;
@@ -54,11 +56,11 @@ underlineCurrent();
 //ADDING EVENT LISTENERS TO SQUARES/BUTTONS
 for (let value of square) {
     totalSquares++;
-    value.addEventListener('click', myScript);
+    value.addEventListener('click', playerChooses);
 }
 
 //ALTERS CLICKED SQUARE, CHECKS FOR A WIN
-function myScript(event) {
+function playerChooses(event) {
     if (!event.target.classList.contains('clicked')) {
         event.target.classList.add('clicked');
         if (`${currentPlayer}` === 'playerOne') {
@@ -102,12 +104,11 @@ function checkRowsAndColumns(event) {
             }
         }
         if (winCheck === 3) {
+            scoreAdder(event);
             if (rowOrColumn === 1) {
                 messageBox.innerText = `${event.target.classList[4]} won with three in the same row!`;
-                scoreAdder(event);
             } else {
                 messageBox.innerText = `${event.target.classList[4]} won with three in the same column!`;
-                scoreAdder(event);
             }
             stopClicking();
         }
@@ -139,6 +140,7 @@ function checkDiagonals(event) {
     ) {
         messageBox.innerText = `${event.target.classList[4]} won diagonally!`;
         scoreAdder(event);
+        stopClicking();
     }
 }
 
@@ -165,7 +167,7 @@ function scoreAdder(event) {
 //RESTART THE GAME, RESET VARIABLES
 function restartGame() {
     for (let value of square) {
-        value.style.backgroundColor = 'lightblue';
+        value.style.backgroundColor = 'white';
         for (let value of square) {
             value.classList.remove('clicked');
             value.classList.remove(`${playerOne.id}`);
@@ -180,17 +182,15 @@ function restartGame() {
 
 //FUNCTION CALLED BY 'CHANGE NAME' BUTTON, CREATES FORM TO ALTER NAMES
 function changeName() {
-    let element = document.createElement('p');
-    element.innerHTML =
-        '<div><label for="playerOne">Player One</label><input type="text" id="playerOneNameInput"></div><div><label for="playerTwo">Player Two</label><input type="text" id="playerTwoNameInput"></div><button id="submitNameChanges" onclick="submitNameChange(playerOneNameInput.value, playerTwoNameInput.value)">Submit Name Changes </button>';
-    element.setAttribute('id', 'nameForm');
-    element.classList.add('nameForm');
-    body.appendChild(element);
+    console.log('adasdasd');
+    nameChangeGrey.style.visibility = 'visible';
 }
 
-/*
-    THIS NEEDS WORK, WILL LIKELY IMPLEMENT PERMANENT ELEMENT THAT SITS BEHIND GAME SO THAT VARIABLES ARE EASILY PASSED
-*/
+function exitNameChange(event) {
+    console.log(event);
+    nameChangeGrey.style.visibility = 'hidden';
+    event.stopPropagation();
+}
 
 //IMPLEMENTS CHANGES FROM CHANGENAME() FORM
 function submitNameChange(firstName, secondName) {
@@ -210,57 +210,3 @@ function submitNameChange(firstName, secondName) {
         playerTwo.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
     document.getElementById('nameForm').remove();
 }
-// function checkDiagonals(event) {
-//     if (event.target.id === '1,1') {
-//         if (
-//             square33.classList[4] === event.target.classList[4] &&
-//             square22.classList[4] === event.target.classList[4]
-//         ) {
-//             setTimeout(function () {
-//                 alert(`${event.target.classList[4]} won diagonally!`);
-//             }, 30);
-//             stopClicking();
-//         }
-//     } else if (event.target.id === '3,1') {
-//         if (
-//             square13.classList[4] === event.target.classList[4] &&
-//             square22.classList[4] === event.target.classList[4]
-//         ) {
-//             setTimeout(function () {
-//                 alert(`${event.target.classList[4]} won diagonally!`);
-//             }, 30);
-//             stopClicking();
-//         }
-//     } else if (event.target.id === '1,3') {
-//         if (
-//             square31.classList[4] === event.target.classList[4] &&
-//             square22.classList[4] === event.target.classList[4]
-//         ) {
-//             setTimeout(function () {
-//                 alert(`${event.target.classList[4]} won diagonally!`);
-//             }, 30);
-//             stopClicking();
-//         }
-//     } else if (event.target.id === '3,3') {
-//         if (
-//             square11.classList[4] === event.target.classList[4] &&
-//             square22.classList[4] === event.target.classList[4]
-//         ) {
-//             setTimeout(function () {
-//                 alert(`${event.target.classList[4]} won diagonally!`);
-//             }, 30);
-//             stopClicking();
-//         }
-//     } else if (event.target.id === '2,2') {
-//         if (
-//             square11.classList[4] === event.target.classList[4] &&
-//             square22.classList[4] === event.target.classList[4]
-//         ) {
-//             //NEEDS TO BE UPDATED WITH ALL FOUR CORNERS
-//             setTimeout(function () {
-//                 alert(`${event.target.classList[4]} won diagonally!`);
-//             }, 30);
-//             stopClicking();
-//         }
-//     }
-// }
