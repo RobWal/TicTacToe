@@ -75,6 +75,18 @@ main h1 {
 #playerTwo {
     margin: 0 0 2vh 0;
 }
+
+.moveLogPrint {
+    position: absolute;
+    max-width: 20vw;
+    left: 2vw;
+    top: 11vh;
+    visibility: hidden;
+}
+
+.hidden {
+    visibility: visible;
+}
 .options button {
     display: flex;
     align-content: center;

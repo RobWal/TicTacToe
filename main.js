@@ -35,11 +35,16 @@ const changeNameButton = document.getElementById('changeName');
 changeNameButton.addEventListener('click', changeName);
 const nameChangeGrey = document.getElementById('nameChangeGrey');
 nameChangeGrey.addEventListener('click', exitNameChange);
+const moveLogButton = document.getElementById('moveLog');
+moveLogButton.addEventListener('click', showMoveLog);
+const moveLogPrint = document.getElementById('moveLogPrint');
 
 playerOneTag.innerText =
     playerTwo.innerText = `${playerOne.id}:  ${playerOne.score}`;
 playerTwoTag.innerText =
     playerTwo.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
+
+let moveLogArray = [];
 
 //UNDERLINES CURRENT PLAYER
 function underlineCurrent() {
@@ -62,6 +67,7 @@ for (let value of square) {
 //ALTERS CLICKED SQUARE, CHECKS FOR A WIN
 function playerChooses(event) {
     if (!event.target.classList.contains('clicked')) {
+        logMoveLog(event);
         event.target.classList.add('clicked');
         if (`${currentPlayer}` === 'playerOne') {
             event.target.style.backgroundColor = `${playerOne.color}`;
@@ -164,16 +170,50 @@ function scoreAdder(event) {
     }
 }
 
+//LOG MOVELOG FUNCTIONALITY
+function logMoveLog(event) {
+    // if (currentPlayer === 'playerOne') {
+    //     moveLogArray.push(
+    //         `${totalClicks + 1}: ${playerOne.id} clicked cell ${
+    //             event.target.id
+    //         }`
+    //     );
+    // } else {
+    //     moveLogArray.push(
+    //         `${totalClicks + 1}: ${playerTwo.id} clicked cell ${
+    //             event.target.id
+    //         }`
+    //     );
+    // }
+    let element = document.createElement('p');
+    if (currentPlayer === 'playerOne') {
+        element.innerText = `${totalClicks + 1}: ${playerOne.id} clicked cell ${
+            event.target.id
+        }`;
+    } else {
+        element.innerText = `${totalClicks + 1}: ${playerTwo.id} clicked cell ${
+            event.target.id
+        }`;
+    }
+    moveLogPrint.appendChild(element);
+}
+
+//MOVE LOG BUTTON FUNCTIONALITY
+function showMoveLog() {
+    moveLogPrint.classList.toggle('hidden');
+}
+
 //RESTART THE GAME, RESET VARIABLES
 function restartGame() {
     for (let value of square) {
         value.style.backgroundColor = 'white';
-        for (let value of square) {
-            value.classList.remove('clicked');
-            value.classList.remove(`${playerOne.id}`);
-            value.classList.remove(`${playerTwo.id}`);
-        }
+        value.classList.remove('clicked');
+        value.classList.remove(`${playerOne.id}`);
+        value.classList.remove(`${playerTwo.id}`);
     }
+    moveLogPrint.innerHTML = '';
+    messageBox.innerText = '';
+    moveLogArray = [];
     totalClicks = 0;
     currentPlayer = 'playerOne';
     underlineCurrent();
