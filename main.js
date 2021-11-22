@@ -182,13 +182,15 @@ function restartGame() {
 
 //FUNCTION CALLED BY 'CHANGE NAME' BUTTON, CREATES FORM TO ALTER NAMES
 function changeName() {
-    console.log('adasdasd');
-    nameChangeGrey.style.visibility = 'visible';
+    // nameChangeGrey.style.visibility = 'visible';
+    nameChangeGrey.style.opacity = '1';
+    nameChangeGrey.style.zIndex = '0';
 }
 
 function exitNameChange(event) {
-    console.log(event);
-    nameChangeGrey.style.visibility = 'hidden';
+    // nameChangeGrey.style.visibility = 'hidden';
+    nameChangeGrey.style.opacity = '0';
+    nameChangeGrey.style.zIndex = '-1';
     event.stopPropagation();
 }
 

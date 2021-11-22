@@ -90,7 +90,11 @@ main h1 {
 
 .nameChangeGrey {
     background-color: rgba(121, 121, 121, 0.426);
-    visibility: hidden;
+    /* visibility: hidden; */
+    /* transition: visibility 2s; */
+    transition: all 1s;
+    z-index: -1;
+    opacity: 0;
     display: flex;
     align-items: center;
     justify-content: center;
