@@ -172,19 +172,6 @@ function scoreAdder(event) {
 
 //LOG MOVELOG FUNCTIONALITY
 function logMoveLog(event) {
-    // if (currentPlayer === 'playerOne') {
-    //     moveLogArray.push(
-    //         `${totalClicks + 1}: ${playerOne.id} clicked cell ${
-    //             event.target.id
-    //         }`
-    //     );
-    // } else {
-    //     moveLogArray.push(
-    //         `${totalClicks + 1}: ${playerTwo.id} clicked cell ${
-    //             event.target.id
-    //         }`
-    //     );
-    // }
     let element = document.createElement('p');
     if (currentPlayer === 'playerOne') {
         element.innerText = `${totalClicks + 1}: ${playerOne.id} clicked cell ${
@@ -198,9 +185,18 @@ function logMoveLog(event) {
     moveLogPrint.appendChild(element);
 }
 
+//THIS NEEDS WORK, NOT WORKINGFOR SOME REASON
 //MOVE LOG BUTTON FUNCTIONALITY
 function showMoveLog() {
     moveLogPrint.classList.toggle('hidden');
+    if (moveLogButton.style.backgroundColor === '') {
+        moveLogButton.style.backgroundColor = '#0040e2a1';
+    } else {
+        moveLogButton.style.backgroundColor = 'rgba(95, 140, 255, 0.631)';
+    }
+    if (moveLogButton.style.backgroundColor === 'rgba(95, 140, 255, 0.631)') {
+        moveLogButton.style.backgroundColor = '#0040e2a1';
+    }
 }
 
 //RESTART THE GAME, RESET VARIABLES
@@ -222,16 +218,15 @@ function restartGame() {
 
 //FUNCTION CALLED BY 'CHANGE NAME' BUTTON, CREATES FORM TO ALTER NAMES
 function changeName() {
-    // nameChangeGrey.style.visibility = 'visible';
     nameChangeGrey.style.opacity = '1';
     nameChangeGrey.style.zIndex = '0';
 }
 
 function exitNameChange(event) {
-    // nameChangeGrey.style.visibility = 'hidden';
-    nameChangeGrey.style.opacity = '0';
-    nameChangeGrey.style.zIndex = '-1';
-    event.stopPropagation();
+    if (event.target.id === 'nameChangeGrey') {
+        nameChangeGrey.style.opacity = '0';
+        nameChangeGrey.style.zIndex = '-1';
+    }
 }
 
 //IMPLEMENTS CHANGES FROM CHANGENAME() FORM

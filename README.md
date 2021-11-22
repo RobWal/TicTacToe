@@ -16,7 +16,7 @@
 ## Layout of the page
 
 -   ~~Somewhere identifying whose turn it is~~
--   Button - log section of who went where, when
+-   ~~Button - log section of who went where, when~~
 -   Button - settings
 -   Button - menu
 -   ~~Adjustable game size~~
