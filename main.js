@@ -13,6 +13,7 @@ let playerTwo = {
     color: 'rgb(255, 221, 153)',
     score: 0,
 };
+let moveLogArray = [];
 
 //LINKING JS TO HTML
 const body = document.querySelector('body');
@@ -35,16 +36,16 @@ const changeNameButton = document.getElementById('changeName');
 changeNameButton.addEventListener('click', changeName);
 const nameChangeGrey = document.getElementById('nameChangeGrey');
 nameChangeGrey.addEventListener('click', exitNameChange);
+const submitNamesButton = document.getElementById('submitNameChanges');
+submitNamesButton.addEventListener('click', submitNameChange);
 const moveLogButton = document.getElementById('moveLog');
 moveLogButton.addEventListener('click', showMoveLog);
 const moveLogPrint = document.getElementById('moveLogPrint');
+playerOneNameInput = document.getElementById('playerOneNameInput');
+playerTwoNameInput = document.getElementById('playerTwoNameInput');
 
-playerOneTag.innerText =
-    playerTwo.innerText = `${playerOne.id}:  ${playerOne.score}`;
-playerTwoTag.innerText =
-    playerTwo.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
-
-let moveLogArray = [];
+playerOneTag.innerText = `${playerOne.id}:  ${playerOne.score}`;
+playerTwoTag.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
 
 //UNDERLINES CURRENT PLAYER
 function underlineCurrent() {
@@ -66,7 +67,8 @@ for (let value of square) {
 
 //ALTERS CLICKED SQUARE, CHECKS FOR A WIN
 function playerChooses(event) {
-    if (!event.target.classList.contains('clicked')) {
+    let notYetClicked = !event.target.classList.contains('clicked');
+    if (notYetClicked) {
         logMoveLog(event);
         event.target.classList.add('clicked');
         if (`${currentPlayer}` === 'playerOne') {
@@ -98,13 +100,14 @@ function playerChooses(event) {
 //CHECK FOR A WIN IN SAME ROW/COLUMN
 //rowOrColumn = 1 TARGETS ROWS, =2 TARGETS COLUMNS
 function checkRowsAndColumns(event) {
+    let squarePlayerID = event.target.classList[4];
     let rowOrColumn = 1;
     while (rowOrColumn < 3) {
         let winCheck = 0;
         for (let value of square) {
             if (
                 value.classList.contains(event.target.classList[rowOrColumn]) &&
-                value.classList.contains(event.target.classList[4])
+                value.classList.contains(squarePlayerID)
             ) {
                 winCheck++;
             }
@@ -112,9 +115,9 @@ function checkRowsAndColumns(event) {
         if (winCheck === 3) {
             scoreAdder(event);
             if (rowOrColumn === 1) {
-                messageBox.innerText = `${event.target.classList[4]} won with three in the same row!`;
+                messageBox.innerText = `${squarePlayerID} won with three in the same row!`;
             } else {
-                messageBox.innerText = `${event.target.classList[4]} won with three in the same column!`;
+                messageBox.innerText = `${squarePlayerID} won with three in the same column!`;
             }
             stopClicking();
         }
@@ -124,27 +127,28 @@ function checkRowsAndColumns(event) {
 
 //CHECKS FOR DIAGONAL WIN
 function checkDiagonals(event) {
+    let squarePlayerID = event.target.classList[4];
     if (
         (event.target.id === '1,1' &&
-            square33.classList[4] === event.target.classList[4] &&
-            square22.classList[4] === event.target.classList[4]) ||
+            square33.classList[4] === squarePlayerID &&
+            square22.classList[4] === squarePlayerID) ||
         (event.target.id === '3,1' &&
-            square13.classList[4] === event.target.classList[4] &&
-            square22.classList[4] === event.target.classList[4]) ||
+            square13.classList[4] === squarePlayerID &&
+            square22.classList[4] === squarePlayerID) ||
         (event.target.id === '1,3' &&
-            square31.classList[4] === event.target.classList[4] &&
-            square22.classList[4] === event.target.classList[4]) ||
+            square31.classList[4] === squarePlayerID &&
+            square22.classList[4] === squarePlayerID) ||
         (event.target.id === '3,3' &&
-            square11.classList[4] === event.target.classList[4] &&
-            square22.classList[4] === event.target.classList[4]) ||
+            square11.classList[4] === squarePlayerID &&
+            square22.classList[4] === squarePlayerID) ||
         (event.target.id === '2,2' &&
-            square11.classList[4] === event.target.classList[4] &&
-            square33.classList[4] === event.target.classList[4]) ||
+            square11.classList[4] === squarePlayerID &&
+            square33.classList[4] === squarePlayerID) ||
         (event.target.id === '2,2' &&
-            square31.classList[4] === event.target.classList[4] &&
-            square13.classList[4] === event.target.classList[4])
+            square31.classList[4] === squarePlayerID &&
+            square13.classList[4] === squarePlayerID)
     ) {
-        messageBox.innerText = `${event.target.classList[4]} won diagonally!`;
+        messageBox.innerText = `${squarePlayerID} won diagonally!`;
         scoreAdder(event);
         stopClicking();
     }
@@ -185,17 +189,16 @@ function logMoveLog(event) {
     moveLogPrint.appendChild(element);
 }
 
-//THIS NEEDS WORK, NOT WORKINGFOR SOME REASON
 //MOVE LOG BUTTON FUNCTIONALITY
 function showMoveLog() {
     moveLogPrint.classList.toggle('hidden');
-    if (moveLogButton.style.backgroundColor === '') {
+    if (
+        moveLogButton.style.backgroundColor === '' ||
+        moveLogButton.style.backgroundColor === 'rgba(95, 140, 255, 0.63)'
+    ) {
         moveLogButton.style.backgroundColor = '#0040e2a1';
     } else {
-        moveLogButton.style.backgroundColor = 'rgba(95, 140, 255, 0.631)';
-    }
-    if (moveLogButton.style.backgroundColor === 'rgba(95, 140, 255, 0.631)') {
-        moveLogButton.style.backgroundColor = '#0040e2a1';
+        moveLogButton.style.backgroundColor = 'rgba(95, 140, 255, 0.63)';
     }
 }
 
@@ -219,31 +222,45 @@ function restartGame() {
 //FUNCTION CALLED BY 'CHANGE NAME' BUTTON, CREATES FORM TO ALTER NAMES
 function changeName() {
     nameChangeGrey.style.opacity = '1';
-    nameChangeGrey.style.zIndex = '0';
+    nameChangeGrey.style.pointerEvents = 'all';
 }
 
 function exitNameChange(event) {
     if (event.target.id === 'nameChangeGrey') {
         nameChangeGrey.style.opacity = '0';
-        nameChangeGrey.style.zIndex = '-1';
+        nameChangeGrey.style.pointerEvents = 'none';
     }
 }
 
 //IMPLEMENTS CHANGES FROM CHANGENAME() FORM
-function submitNameChange(firstName, secondName) {
-    if (
-        playerOneNameInput.contains(' ') ||
-        playerTwoNameInput.contains(' ') ||
-        playerOneNameInput === 'playerOne' ||
-        playerTwoNameInput === 'playerTwo'
+function submitNameChange() {
+    if (playerOneNameInput.value === '' || playerTwoNameInput.value === '') {
+        console.log('To submit, give both players a name');
+    } else if (
+        playerOneNameInput.value.includes(' ') ||
+        playerTwoNameInput.value.includes(' ')
     ) {
-        alert('Ivalid input');
+        console.log('Names cannot have spaces!');
+    } else {
+        for (let box of square) {
+            console.log('box.classlist:    ' + box.classList);
+            console.log('box.classlist4:    ' + box.classList[4]);
+            console.log('playerOneId:    ' + playerOne.id);
+            console.log(box.classList[4] === playerOne.id);
+            if (box.classList[4] === playerOne.id) {
+                box.classList.remove(playerOne.id);
+                box.classList.add(playerOneNameInput.value);
+            } else if (box.classList[4] === playerTwo.id) {
+                box.classList.remove(playerTwo.id);
+                box.classList.add(playerTwoNameInput.value);
+            }
+            console.log(box);
+        }
+        playerOne.id = playerOneNameInput.value;
+        playerTwo.id = playerTwoNameInput.value;
+        playerOneTag.innerText = `${playerOne.id}:  ${playerOne.score}`;
+        playerTwoTag.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
+        nameChangeGrey.style.opacity = '0';
+        nameChangeGrey.style.pointerEvents = 'none';
     }
-    playerOne.id = firstName;
-    playerTwo.id = secondName;
-    playerOneTag.innerText =
-        playerTwo.innerText = `${playerOne.id}:  ${playerOne.score}`;
-    playerTwoTag.innerText =
-        playerTwo.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
-    document.getElementById('nameForm').remove();
 }
