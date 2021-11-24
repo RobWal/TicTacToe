@@ -1,5 +1,7 @@
 # TicTacToe
 
+Live site - https://robwal.github.io/TicTacToe/
+
 # What we'll need
 
 -   ~~Render a game in the browser~~
@@ -16,15 +18,19 @@
 ## Layout of the page
 
 -   ~~Somewhere identifying whose turn it is~~
+-   ~~Show player names~~
 -   ~~Button - log section of who went where, when~~
 -   Button - settings
 -   Button - menu
+-   ~~Button - restart game~~
 -   ~~Adjustable game size~~
 -   Button - how to play section
 -   Adspace
 
-## Settings
+## Functionality
 
+-   ~~Restart game~~
+-   ~~Name change~~
 -   Allow for changing of rules
 -   Game timer
 -   Allow for "best of X" competition, ie. best of 5

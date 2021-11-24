@@ -5,11 +5,13 @@ let totalSquares = 0;
 let wasGameWon = false;
 let playerOne = {
     id: 'First-Player',
+    username: 'First-Player',
     color: 'rgb(179, 255, 153)',
     score: 0,
 };
 let playerTwo = {
     id: 'Second-Player',
+    username: 'Second-Player',
     color: 'rgb(255, 221, 153)',
     score: 0,
 };
@@ -31,21 +33,16 @@ const playerOneTag = document.getElementById('playerOne');
 const playerTwoTag = document.getElementById('playerTwo');
 const messageBox = document.getElementById('messageBox');
 const restartButton = document.getElementById('restartGame');
-restartButton.addEventListener('click', restartGame);
 const changeNameButton = document.getElementById('changeName');
-changeNameButton.addEventListener('click', changeName);
 const nameChangeGrey = document.getElementById('nameChangeGrey');
-nameChangeGrey.addEventListener('click', exitNameChange);
 const submitNamesButton = document.getElementById('submitNameChanges');
-submitNamesButton.addEventListener('click', submitNameChange);
 const moveLogButton = document.getElementById('moveLog');
-moveLogButton.addEventListener('click', showMoveLog);
 const moveLogPrint = document.getElementById('moveLogPrint');
 playerOneNameInput = document.getElementById('playerOneNameInput');
 playerTwoNameInput = document.getElementById('playerTwoNameInput');
 
-playerOneTag.innerText = `${playerOne.id}:  ${playerOne.score}`;
-playerTwoTag.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
+playerOneTag.innerText = `${playerOne.username}:  ${playerOne.score}`;
+playerTwoTag.innerText = `${playerTwo.username}:  ${playerTwo.score}`;
 
 //UNDERLINES CURRENT PLAYER
 function underlineCurrent() {
@@ -59,14 +56,8 @@ function underlineCurrent() {
 }
 underlineCurrent();
 
-//ADDING EVENT LISTENERS TO SQUARES/BUTTONS
-for (let value of square) {
-    totalSquares++;
-    value.addEventListener('click', playerChooses);
-}
-
 //ALTERS CLICKED SQUARE, CHECKS FOR A WIN
-function playerChooses(event) {
+const playerChooses = (event) => {
     let notYetClicked = !event.target.classList.contains('clicked');
     if (notYetClicked) {
         logMoveLog(event);
@@ -95,11 +86,17 @@ function playerChooses(event) {
             messageBox.innerText = "It's a draw!";
         }
     }
+};
+
+//ADDING EVENT LISTENERS TO SQUARES/BUTTONS
+for (let value of square) {
+    totalSquares++;
+    value.addEventListener('click', playerChooses);
 }
 
 //CHECK FOR A WIN IN SAME ROW/COLUMN
 //rowOrColumn = 1 TARGETS ROWS, =2 TARGETS COLUMNS
-function checkRowsAndColumns(event) {
+const checkRowsAndColumns = (event) => {
     let squarePlayerID = event.target.classList[4];
     let rowOrColumn = 1;
     while (rowOrColumn < 3) {
@@ -115,18 +112,26 @@ function checkRowsAndColumns(event) {
         if (winCheck === 3) {
             scoreAdder(event);
             if (rowOrColumn === 1) {
-                messageBox.innerText = `${squarePlayerID} won with three in the same row!`;
+                if (currentPlayer === 'playerOne') {
+                    messageBox.innerText = `${playerOne.username} won with three in the same row!`;
+                } else {
+                    messageBox.innerText = `${playerTwo.username} won with three in the same row!`;
+                }
             } else {
-                messageBox.innerText = `${squarePlayerID} won with three in the same column!`;
+                if (currentPlayer === 'playerOne') {
+                    messageBox.innerText = `${playerOne.username} won with three in the same column!`;
+                } else {
+                    messageBox.innerText = `${playerTwo.username} won with three in the same column!`;
+                }
             }
             stopClicking();
         }
         rowOrColumn++;
     }
-}
+};
 
 //CHECKS FOR DIAGONAL WIN
-function checkDiagonals(event) {
+const checkDiagonals = (event) => {
     let squarePlayerID = event.target.classList[4];
     if (
         (event.target.id === '1,1' &&
@@ -148,49 +153,53 @@ function checkDiagonals(event) {
             square31.classList[4] === squarePlayerID &&
             square13.classList[4] === squarePlayerID)
     ) {
-        messageBox.innerText = `${squarePlayerID} won diagonally!`;
+        if (currentPlayer === 'playerOne') {
+            messageBox.innerText = `${playerOne.username} won diagonally!`;
+        } else {
+            messageBox.innerText = `${playerTwo.username} won diagonally!`;
+        }
         scoreAdder(event);
         stopClicking();
     }
-}
+};
 
 //ADDS 'CLICKED' CLASS TO SQUARES WITHOUT IT, ACTS AS CLICKABLE STOPPER
-function stopClicking() {
+const stopClicking = () => {
     for (let value of square) {
         if (!value.classList.contains('clicked')) {
             value.classList.add('clicked');
         }
     }
     wasGameWon = true;
-}
+};
 
-function scoreAdder(event) {
+const scoreAdder = (event) => {
     if (playerOne.id === event.target.classList[4]) {
         playerOne.score++;
-        playerOneTag.innerText = `${playerOne.id}:  ${playerOne.score}`;
+        playerOneTag.innerText = `${playerOne.username}:  ${playerOne.score}`;
     } else {
         playerTwo.score++;
-        playerTwoTag.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
+        playerTwoTag.innerText = `${playerTwo.username}:  ${playerTwo.score}`;
     }
-}
+};
 
 //LOG MOVELOG FUNCTIONALITY
-function logMoveLog(event) {
+const logMoveLog = (event) => {
     let element = document.createElement('p');
     if (currentPlayer === 'playerOne') {
-        element.innerText = `${totalClicks + 1}: ${playerOne.id} clicked cell ${
-            event.target.id
-        }`;
+        element.innerText = `${totalClicks + 1}: ${
+            playerOne.username
+        } clicked cell ${event.target.id}`;
     } else {
-        element.innerText = `${totalClicks + 1}: ${playerTwo.id} clicked cell ${
-            event.target.id
-        }`;
+        element.innerText = `${totalClicks + 1}: ${
+            playerTwo.username
+        } clicked cell ${event.target.id}`;
     }
     moveLogPrint.appendChild(element);
-}
+};
 
 //MOVE LOG BUTTON FUNCTIONALITY
-function showMoveLog() {
+const showMoveLog = () => {
     moveLogPrint.classList.toggle('hidden');
     if (
         moveLogButton.style.backgroundColor === '' ||
@@ -200,10 +209,11 @@ function showMoveLog() {
     } else {
         moveLogButton.style.backgroundColor = 'rgba(95, 140, 255, 0.63)';
     }
-}
+};
+moveLogButton.addEventListener('click', showMoveLog);
 
 //RESTART THE GAME, RESET VARIABLES
-function restartGame() {
+const restartGame = () => {
     for (let value of square) {
         value.style.backgroundColor = 'white';
         value.classList.remove('clicked');
@@ -217,50 +227,38 @@ function restartGame() {
     currentPlayer = 'playerOne';
     underlineCurrent();
     wasGameWon = false;
-}
+};
+restartButton.addEventListener('click', restartGame);
 
 //FUNCTION CALLED BY 'CHANGE NAME' BUTTON, CREATES FORM TO ALTER NAMES
-function changeName() {
+const changeName = () => {
     nameChangeGrey.style.opacity = '1';
     nameChangeGrey.style.pointerEvents = 'all';
-}
+};
+changeNameButton.addEventListener('click', changeName);
 
-function exitNameChange(event) {
+//TOGGLED WHEN SUBMITTING / CLICKING GREY SPACE
+const exitNameChange = (event) => {
     if (event.target.id === 'nameChangeGrey') {
         nameChangeGrey.style.opacity = '0';
         nameChangeGrey.style.pointerEvents = 'none';
     }
-}
+};
+nameChangeGrey.addEventListener('click', exitNameChange);
 
 //IMPLEMENTS CHANGES FROM CHANGENAME() FORM
-function submitNameChange() {
-    if (playerOneNameInput.value === '' || playerTwoNameInput.value === '') {
-        console.log('To submit, give both players a name');
-    } else if (
-        playerOneNameInput.value.includes(' ') ||
-        playerTwoNameInput.value.includes(' ')
-    ) {
-        console.log('Names cannot have spaces!');
-    } else {
-        for (let box of square) {
-            console.log('box.classlist:    ' + box.classList);
-            console.log('box.classlist4:    ' + box.classList[4]);
-            console.log('playerOneId:    ' + playerOne.id);
-            console.log(box.classList[4] === playerOne.id);
-            if (box.classList[4] === playerOne.id) {
-                box.classList.remove(playerOne.id);
-                box.classList.add(playerOneNameInput.value);
-            } else if (box.classList[4] === playerTwo.id) {
-                box.classList.remove(playerTwo.id);
-                box.classList.add(playerTwoNameInput.value);
-            }
-            console.log(box);
-        }
-        playerOne.id = playerOneNameInput.value;
-        playerTwo.id = playerTwoNameInput.value;
-        playerOneTag.innerText = `${playerOne.id}:  ${playerOne.score}`;
-        playerTwoTag.innerText = `${playerTwo.id}:  ${playerTwo.score}`;
-        nameChangeGrey.style.opacity = '0';
-        nameChangeGrey.style.pointerEvents = 'none';
+const submitNameChange = () => {
+    if (!(playerOneNameInput.value === '')) {
+        playerOne.username = playerOneNameInput.value;
+        playerOneTag.innerText = `${playerOne.username}:  ${playerOne.score}`;
+        playerOneNameInput.value = '';
     }
-}
+    if (!(playerTwoNameInput.value === '')) {
+        playerTwo.username = playerTwoNameInput.value;
+        playerTwoTag.innerText = `${playerTwo.username}:  ${playerTwo.score}`;
+        playerTwoNameInput.value = '';
+    }
+    nameChangeGrey.style.opacity = '0';
+    nameChangeGrey.style.pointerEvents = 'none';
+};
+submitNamesButton.addEventListener('click', submitNameChange);
