@@ -13,8 +13,8 @@
         <header>
             <h1>Tic Tac Toe</h1>
         </header>
-    
         <main>
+            <div id="bestOfHint"><button>X</button>Warning! Starting a Best Of Series will reset everything!</div>
             <div class = "moveLogPrint" id="moveLogPrint"></div>
             <div class="gameBox">
                 <div class="square row1 column1" id="1,1"></div>
@@ -29,7 +29,6 @@
             </div>
             <h1 id="messageBox"></h1>
         </main>
-    
         <div class="options">
             <h1>Options/Info</h1>
             <h2>Players: </h2>
@@ -37,19 +36,35 @@
             <h3 id="playerTwo"></h3>
             <button id="moveLog">Move History</button>
             <button id="restartGame">Restart Game</button>
+            <button id="restartScore">Restart Score</button>
+            <button id="bestOf">Best Of Series</button>
             <button id="changeName">Change Name</button>
+            <button id="toggleTips">Toggle Tips</button>
         </div>
-    
-        <div id="nameChangeGrey" class="nameChangeGrey">
-            <div class="nameChangeContainer">
+        <div id="bestOfGrey" class="greyBox">
+            <div class = greyContainer>
+                <p>Best of?</p>
+                <div id="bestOfChoice">
+                    <button class="bestOfChoice" id="bestOfOne">1</button>
+                    <button class="bestOfChoice" id="bestOfThree">3</button>
+                    <button class="bestOfChoice" id="bestOfFive">5</button>
+                    <button class="bestOfChoice" id="bestOfSeven">7</button>
+                    <button class="bestOfChoice" id="bestOfNine">9</button>    
+                </div>
+            </div>
+        </div>
+        <div id="nameChangeGrey" class="greyBox">
+            <div class="greyContainer">
                 <div id="nameChangeRowOne"><label for="playerOneNameInput">Player One - </label><input type="text" id="playerOneNameInput"></div>
                 <div id="nameChangeRowTwo"><label for="playerTwoNameInput">Player Two - </label><input type="text" id="playerTwoNameInput"></div>
+                <div id="nameChangeError"></div>
                 <button id="submitNameChanges">Submit Changes</button>
             </div>
         </div>    
 
         <footer>
-            <h1></h1>
+            <h1 id="bestOfAnnouncer"></h1>
+            <p id="bestOfScore"></p>
         </footer>
     
     </div>

@@ -15,16 +15,20 @@ Live site - https://robwal.github.io/TicTacToe/
 
 # Wants
 
+## Currently working on
+
+-   "Best Of X"
+-   Toggle tips
+
 ## Layout of the page
 
 -   ~~Somewhere identifying whose turn it is~~
 -   ~~Show player names~~
 -   ~~Button - log section of who went where, when~~
 -   Button - settings
--   Button - menu
 -   ~~Button - restart game~~
+-   ~~Button - restart score~~
 -   ~~Adjustable game size~~
--   Button - how to play section
 -   Adspace
 
 ## Functionality
@@ -35,5 +39,6 @@ Live site - https://robwal.github.io/TicTacToe/
 -   Game timer
 -   Allow for "best of X" competition, ie. best of 5
 -   ~~Show player names~~/profiles
+-   Toggle tips
 -   Game sound effects
 -   Save games/profiles
